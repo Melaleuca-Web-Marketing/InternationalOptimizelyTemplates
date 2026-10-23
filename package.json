@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:shelf-v3": "node build.js tmpl-productrecs-shelf-v3",
+    "build:recs-v1": "node build.js tmpl-productrecs-v1",
     "build:recs-v3": "node build.js tmpl-productrecs-v3",
+    "build:shelf-v3": "node build.js tmpl-productrecs-shelf-v3",
+    "build:stripbanner-v1": "node build.js tmpl-stripbanner-v1",
+    "build:stripbanner-v2": "node build.js tmpl-stripbanner-v2",
+    "build:herocarousel-v1": "node build.js tmpl-herocarousel-v1",
     "build:herocarousel-v2": "node build.js tmpl-herocarousel-v2",
     "build:catpromo-v1": "node build.js tmpl-catpromo-v1",
     "decompose": "node decompose.js"

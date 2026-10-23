@@ -40,9 +40,48 @@ InternationalOptimizelyTemplates/
 │   └── tmpl-productrecs-v3-optimizely-import.json # consolidated JSON produced by build.js — import THIS
 │
 ├── tmpl-productrecs-shelf-v3/    # same structure
+├── tmpl-productrecs-v1/
 ├── tmpl-stripbanner-v1/
-└── tmpl-stripbanner-v2/
+├── tmpl-stripbanner-v2/
+├── tmpl-herocarousel-v1/
+├── tmpl-herocarousel-v2/
+├── tmpl-catpromo-v1/
+│
+├── tmpl-productrecs-v1-initial.json   # early exports kept for reference (not templates)
+└── tmpl-stripbanner-v1-initial.json
 ```
+
+### Templates
+
+| Folder | What it does |
+|--------|--------------|
+| `tmpl-productrecs-v1` | Enhanced product carousel with product recommendations (original) |
+| `tmpl-productrecs-v3` | Product carousel with recommendations, singleton-manager architecture |
+| `tmpl-productrecs-shelf-v3` | Shelf version of the v3 carousel; multi-market context detection, localized pricing and aria-labels |
+| `tmpl-stripbanner-v1` | Full-width strip banner (New Welcome Program on the PSLP); anchors to the top-navigation carousel |
+| `tmpl-stripbanner-v2` | Strip banner targeting `#mainContent`, for hybrid mobile-app webview compatibility |
+| `tmpl-herocarousel-v1` | Replaces all hero-carousel slides from a JSON config (static and video slides) |
+| `tmpl-herocarousel-v2` | v1 plus optional single-slide targeting (Target Slide Index) for concurrent A/B tests |
+| `tmpl-catpromo-v1` | Category page product cards: 2-column waterfall grid at ≤576px, plus `data-cat-promo*` analytics attributes (see below) |
+
+### tmpl-catpromo-v1
+
+Injects no markup (its `html` part is intentionally empty). It has two jobs:
+
+- **CSS** — switches the category grid (`.p-catListing__grid`) to a 2-column
+  `column-count` waterfall layout at screen widths of 576px and below.
+- **Analytics attributes** — stamps `data-cat-promo` on each product card
+  (`card`) and its interactive zones (`stamp`, `image`, `title`,
+  `shop-options`, `details`, `save`, `select`). Each card also gets
+  `data-cat-promo-sku`, `-name` and `-price` (member price as a plain number).
+  - SKU comes from the `id` in the `dataLayer` `impressions` event, matched to
+    the card by product name; name and price come from the card DOM.
+  - A `MutationObserver` re-stamps cards added by Load More, filter, or sort.
+  - Editor fields: **Product Grid Selector** (default `.p-catListing__grid`),
+    **Analytics Attribute Name** (default `data-cat-promo`), and
+    **Only Stamp At Or Below Width (px)** (default `576`; blank = all widths).
+    Crossing the breakpoint adds or removes the attributes without a reload.
+  - Reset removes the observer and every attribute the template added.
 
 ### The seven files a template folder contains
 
@@ -50,7 +89,7 @@ InternationalOptimizelyTemplates/
 |------|--------------|-------|
 | `template-meta.json` | `plugin_type`, `name`, `edit_page_url`, `description` | Fixed filename (not prefixed) |
 | `form-schema.json` | `form_schema` | Fixed filename. Array of editor fields |
-| `<name>-html.html` | `options.html` | |
+| `<name>-html.html` | `options.html` | May be empty if the template injects no markup (e.g. `tmpl-catpromo-v1`) |
 | `<name>-css.css` | `options.css` | May be empty if the template has no CSS |
 | `<name>-applyJS.js` | `options.apply_js` | |
 | `<name>-resetJS.js` | `options.undo_js` | |
@@ -60,9 +99,12 @@ InternationalOptimizelyTemplates/
 `template-meta.json`. The `template-meta.json` and `form-schema.json` filenames
 are **fixed**; the four `options.*` files are **prefixed** with `<name>`.
 
-> A `<name>-baseline.json` file is usually also present. That is the *original*
+> A `<name>-baseline.json` file is often also present. That is the *original*
 > consolidated JSON that was decomposed — kept only for reference, never edited
-> or imported. `build.js` never touches it; it writes `<name>-optimizely-import.json`
+> or imported. Templates authored directly as component files (e.g.
+> `tmpl-catpromo-v1`) have no baseline, and a few older folders have a baseline
+> but no `-optimizely-import.json` yet — run `build.js` to generate one.
+> `build.js` never touches the baseline; it writes `<name>-optimizely-import.json`
 > instead, so you can diff the two to see exactly what your edits changed.
 >
 > **The two names are deliberately dissimilar.** An earlier version of this repo
@@ -158,8 +200,14 @@ Notes:
 
 | Command | Runs |
 |---------|------|
+| `npm run build:recs-v1` | `node build.js tmpl-productrecs-v1` |
 | `npm run build:recs-v3` | `node build.js tmpl-productrecs-v3` |
 | `npm run build:shelf-v3` | `node build.js tmpl-productrecs-shelf-v3` |
+| `npm run build:stripbanner-v1` | `node build.js tmpl-stripbanner-v1` |
+| `npm run build:stripbanner-v2` | `node build.js tmpl-stripbanner-v2` |
+| `npm run build:herocarousel-v1` | `node build.js tmpl-herocarousel-v1` |
+| `npm run build:herocarousel-v2` | `node build.js tmpl-herocarousel-v2` |
+| `npm run build:catpromo-v1` | `node build.js tmpl-catpromo-v1` |
 | `npm run decompose` | `node decompose.js` (append the JSON path) |
 
 Add a `build:<template>` line per template as new ones are created.
@@ -185,6 +233,34 @@ Add a `build:<template>` line per template as new ones are created.
 3. Edit the component files.
 4. `node build.js <folder>` and import `<name>-optimizely-import.json`.
 
+**Creating a new template from scratch** (no Optimizely export; e.g. `tmpl-catpromo-v1`)
+
+1. Copy an existing folder as a starting point, or create `<name>/` containing
+   `template-meta.json`, `form-schema.json`, and the four `<name>-*` part files
+   (empty files are fine).
+2. Make sure `name` in `template-meta.json` matches the folder and file prefix.
+3. `node build.js <folder>` and import `<name>-optimizely-import.json`.
+4. Add a `build:<template>` script to `package.json` and a row to the
+   Templates table above.
+
 `decompose` and `build` are inverses: decomposing a JSON and immediately building
 it should reproduce the same template (aside from the `-baseline` vs
 `-optimizely-import` filename and JSON key-ordering normalization).
+
+---
+
+## Version control
+
+This folder is a git repository (branch `main`).
+
+- **Committed:** all component files, `build.js` / `decompose.js`, the generated
+  `*-optimizely-import.json` files (so the imported version is recorded and can
+  be diffed against its baseline), and the archival `*-baseline.json` /
+  `*-initial.json` files.
+- **Ignored** (`.gitignore`): `node_modules/`, logs, OS and editor files, temp
+  and backup files, and `.claude/settings.local.json`.
+- **Line endings** (`.gitattributes`): text files are stored as LF.
+  `build.js` also normalizes CRLF to LF when embedding, so the generated JSON is
+  the same regardless of editor.
+- After editing a template, rebuild (`node build.js <template-dir>`) **before
+  committing**, so the committed `-optimizely-import.json` matches the sources.
