@@ -1,0 +1,5 @@
+@media (max-width: 576px) {
+  .p-catListing__grid { display: block; column-count: 2; column-gap: 0; }
+  .p-catListing__col  { flex: none; width: 100%; max-width: none; break-inside: avoid; }
+  .m-prodCard.-grid   { height: auto; }
+}

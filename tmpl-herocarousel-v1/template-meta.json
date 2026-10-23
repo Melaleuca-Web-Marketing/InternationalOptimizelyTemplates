@@ -1,0 +1,6 @@
+{
+  "plugin_type": "widget",
+  "name": "tmpl-herocarousel-v1",
+  "edit_page_url": "https://www.melaleuca.com/",
+  "description": "Replaces all slides in a hero carousel with slides defined in a JSON configuration. Supports both static and video slide types with full customization of images, content, links, and video player settings, including optional full-banner video click behavior."
+}

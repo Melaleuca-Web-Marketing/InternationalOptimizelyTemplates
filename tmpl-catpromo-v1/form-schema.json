@@ -1,0 +1,23 @@
+[
+  {
+    "field_type": "selector",
+    "name": "gridSelector",
+    "options": null,
+    "label": "Product Grid Selector",
+    "default_value": ".p-catListing__grid"
+  },
+  {
+    "field_type": "text",
+    "name": "attributeName",
+    "options": null,
+    "label": "Analytics Attribute Name",
+    "default_value": "data-cat-promo"
+  },
+  {
+    "field_type": "text",
+    "name": "maxWidth",
+    "options": null,
+    "label": "Only Stamp At Or Below Width (px) — blank = all widths",
+    "default_value": "576"
+  }
+]

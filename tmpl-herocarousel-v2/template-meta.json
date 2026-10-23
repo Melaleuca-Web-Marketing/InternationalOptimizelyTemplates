@@ -1,0 +1,6 @@
+{
+  "plugin_type": "widget",
+  "name": "tmpl-herocarousel-v2",
+  "edit_page_url": "https://www.melaleuca.com/",
+  "description": "v2 of the hero carousel template. Adds optional single-slide targeting (Target Slide Index): when set, one extension instance replaces ONLY that one slide, leaving every other slide untouched, so multiple instances can run independent, concurrent A/B tests on individual slides without conflicting. Leave Target Slide Index blank for classic v1 behavior: replaces ALL slides in a hero carousel with slides defined in a JSON configuration. Also hardens any <img> inside a slide's description HTML against a lazy-loading bug where a hidden (e.g. mobile-only) image carrying data-src never resolves, collapsing the slide's content width and breaking centering. Supports both static and video slide types with full customization of images, content, links, and video player settings, including optional full-banner video click behavior."
+}

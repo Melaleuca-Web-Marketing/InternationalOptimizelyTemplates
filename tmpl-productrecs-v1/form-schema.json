@@ -1,0 +1,107 @@
+[
+  {
+    "field_type": "selector",
+    "name": "carousel_selector",
+    "options": null,
+    "label": "Carousel Selector (REQUIRED - select .o-productCarouselVue)",
+    "default_value": ""
+  },
+  {
+    "field_type": "text",
+    "name": "titleCopy",
+    "options": null,
+    "label": "Title Copy",
+    "default_value": "Product Carousel Title"
+  },
+  {
+    "field_type": "text",
+    "name": "replace_count",
+    "options": null,
+    "label": "Number of Cards to Replace",
+    "default_value": "10"
+  },
+  {
+    "field_type": "text",
+    "name": "recs_position_name",
+    "options": null,
+    "label": "Product Recs Position Name",
+    "default_value": "homeWidget"
+  },
+  {
+    "field_type": "dropdown",
+    "name": "culture",
+    "options": {
+      "choices": [
+        {
+          "label": "English (US)",
+          "value": "enus"
+        },
+        {
+          "label": "Spanish (US)",
+          "value": "esus"
+        },
+        {
+          "label": "English (Canada)",
+          "value": "enca"
+        },
+        {
+          "label": "French (Canada)",
+          "value": "frca"
+        },
+        {
+          "label": "Spanish (Mexico)",
+          "value": "esmx"
+        }
+      ]
+    },
+    "label": "Culture/Language",
+    "default_value": "enus"
+  },
+  {
+    "field_type": "selector",
+    "name": "position_target",
+    "options": null,
+    "label": "Position Target (OPTIONAL - select element to position relative to)",
+    "default_value": ""
+  },
+  {
+    "field_type": "dropdown",
+    "name": "position_type",
+    "options": {
+      "choices": [
+        {
+          "label": "None (Don't move)",
+          "value": "none"
+        },
+        {
+          "label": "Before target",
+          "value": "before"
+        },
+        {
+          "label": "After target",
+          "value": "after"
+        },
+        {
+          "label": "Replace target",
+          "value": "replace"
+        }
+      ]
+    },
+    "label": "Position Type",
+    "default_value": "none"
+  },
+  {
+    "field_type": "text",
+    "name": "target_heading",
+    "options": null,
+    "label": "Target Heading",
+    "default_value": "BEST SELLERS"
+  },
+  {
+    "field_type": "text",
+    "name": "other_target_heading",
+    "options": null,
+    "label": "Other Target Heading",
+    "default_value": ""
+  }
+]

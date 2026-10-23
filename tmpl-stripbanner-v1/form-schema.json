@@ -1,0 +1,94 @@
+[
+  {
+    "field_type": "selector",
+    "name": "targetSelector",
+    "options": null,
+    "label": "Target Selector",
+    "default_value": ".o-topNavigationCarousel"
+  },
+  {
+    "field_type": "dropdown",
+    "name": "insertPosition",
+    "options": {
+      "choices": [
+        {
+          "value": "before",
+          "label": "Before"
+        },
+        {
+          "value": "after",
+          "label": "After"
+        },
+        {
+          "value": "replace",
+          "label": "Replace"
+        }
+      ]
+    },
+    "label": "Insert Position",
+    "default_value": "after"
+  },
+  {
+    "field_type": "html",
+    "name": "description",
+    "options": null,
+    "label": "Description",
+    "default_value": "<h2 class=\"text-base text-white hover:underline\"><span class=\"font-bold\">Claim your FREE PRODUCTS now!</span> As a Member, you get $20 in free products for 5 months.&nbsp;❯</h2>"
+  },
+  {
+    "field_type": "text",
+    "name": "link",
+    "options": null,
+    "label": "Link",
+    "default_value": "/"
+  },
+  {
+    "field_type": "text",
+    "name": "backgroundColor",
+    "options": {
+      "mode": "rgba"
+    },
+    "label": "Background Color",
+    "default_value": "rgb(42, 89, 194)"
+  },
+  {
+    "field_type": "dropdown",
+    "name": "horizontalAlignment",
+    "options": {
+      "choices": [
+        {
+          "value": "justify-start",
+          "label": "Left"
+        },
+        {
+          "value": "justify-center",
+          "label": "Center"
+        },
+        {
+          "value": "justify-end",
+          "label": "Right"
+        }
+      ]
+    },
+    "label": "Horizontal Alignment",
+    "default_value": "justify-center"
+  },
+  {
+    "field_type": "dropdown",
+    "name": "hideInMobile",
+    "options": {
+      "choices": [
+        {
+          "value": "block",
+          "label": "Don't Hide"
+        },
+        {
+          "value": "hidden md:block",
+          "label": "Hide"
+        }
+      ]
+    },
+    "label": "Hide In Mobile",
+    "default_value": "block"
+  }
+]

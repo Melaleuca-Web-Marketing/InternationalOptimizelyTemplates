@@ -1,0 +1,12 @@
+{
+  "name": "international-optimizely-templates",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:shelf-v3": "node build.js tmpl-productrecs-shelf-v3",
+    "build:recs-v3": "node build.js tmpl-productrecs-v3",
+    "build:herocarousel-v2": "node build.js tmpl-herocarousel-v2",
+    "build:catpromo-v1": "node build.js tmpl-catpromo-v1",
+    "decompose": "node decompose.js"
+  }
+}

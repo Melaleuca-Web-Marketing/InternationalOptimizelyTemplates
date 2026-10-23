@@ -1,0 +1,23 @@
+[
+  {
+    "default_value": "",
+    "field_type": "text",
+    "name": "titleCopy",
+    "options": null,
+    "label": "Title Copy"
+  },
+  {
+    "default_value": "10",
+    "field_type": "text",
+    "name": "replace_count",
+    "options": null,
+    "label": "Number of Cards to Replace"
+  },
+  {
+    "default_value": "productAlternativesWidget",
+    "field_type": "text",
+    "name": "recs_position_name",
+    "options": null,
+    "label": "Product Recs Position Name"
+  }
+]

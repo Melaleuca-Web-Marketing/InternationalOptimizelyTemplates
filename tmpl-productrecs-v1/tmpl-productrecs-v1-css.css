@@ -1,0 +1,9 @@
+/* Anti-flicker: Hide carousel until Product Recs are loaded */
+.o-productCarouselVue[data-opt-instance] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.o-productCarouselVue[data-opt-ready="true"] {
+  opacity: 1;
+}

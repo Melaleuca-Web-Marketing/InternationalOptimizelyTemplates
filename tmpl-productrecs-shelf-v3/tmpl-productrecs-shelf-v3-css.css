@@ -1,0 +1,15 @@
+/* Anti-flicker: hide shelf carousel until recs are applied */
+.o-productCarouselVue.-isShelf:not([data-opt-ready="true"]) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  min-height: 500px;
+}
+
+/* Reveal with smooth fade once ready */
+.o-productCarouselVue.-isShelf[data-opt-ready="true"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transition: opacity 0.3s ease-in-out;
+}

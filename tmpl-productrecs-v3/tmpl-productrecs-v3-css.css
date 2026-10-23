@@ -1,0 +1,7 @@
+/* Anti-flicker CSS is injected dynamically by apply_js per instance */
+/* This static CSS is a fallback for the Optimizely editor preview */
+.o-productCarouselVue[data-opt-ready="true"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.3s ease-in;
+}

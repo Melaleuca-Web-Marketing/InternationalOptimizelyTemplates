@@ -1,0 +1,6 @@
+{
+  "plugin_type": "widget",
+  "name": "tmpl-stripbanner-v2",
+  "edit_page_url": "https://www.melaleuca.com/",
+  "description": "Full width strip-banner (v2) — targets #mainContent instead of the top navigation, for hybrid mobile-app webview compatibility"
+}

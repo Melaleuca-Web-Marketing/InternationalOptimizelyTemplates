@@ -1,0 +1,106 @@
+{
+  "plugin_type": "widget",
+  "name": "tmpl-stripbanner-v1",
+  "edit_page_url": "https://www.melaleuca.com/",
+  "form_schema": [
+    {
+      "field_type": "selector",
+      "name": "targetSelector",
+      "options": null,
+      "label": "Target Selector",
+      "default_value": ".o-topNavigationCarousel"
+    },
+    {
+      "field_type": "dropdown",
+      "name": "insertPosition",
+      "options": {
+        "choices": [
+          {
+            "value": "before",
+            "label": "Before"
+          },
+          {
+            "value": "after",
+            "label": "After"
+          },
+          {
+            "value": "replace",
+            "label": "Replace"
+          }
+        ]
+      },
+      "label": "Insert Position",
+      "default_value": "after"
+    },
+    {
+      "field_type": "html",
+      "name": "description",
+      "options": null,
+      "label": "Description",
+      "default_value": "<h2 class=\"text-base text-white hover:underline\"><span class=\"font-bold\">Claim your FREE PRODUCTS now!</span> As a Member, you get $20 in free products for 5 months.&nbsp;❯</h2>"
+    },
+    {
+      "field_type": "text",
+      "name": "link",
+      "options": null,
+      "label": "Link",
+      "default_value": "/"
+    },
+    {
+      "field_type": "text",
+      "name": "backgroundColor",
+      "options": {
+        "mode": "rgba"
+      },
+      "label": "Background Color",
+      "default_value": "rgb(42, 89, 194)"
+    },
+    {
+      "field_type": "dropdown",
+      "name": "horizontalAlignment",
+      "options": {
+        "choices": [
+          {
+            "value": "justify-start",
+            "label": "Left"
+          },
+          {
+            "value": "justify-center",
+            "label": "Center"
+          },
+          {
+            "value": "justify-end",
+            "label": "Right"
+          }
+        ]
+      },
+      "label": "Horizontal Alignment",
+      "default_value": "justify-center"
+    },
+    {
+      "field_type": "dropdown",
+      "name": "hideInMobile",
+      "options": {
+        "choices": [
+          {
+            "value": "block",
+            "label": "Don't Hide"
+          },
+          {
+            "value": "hidden md:block",
+            "label": "Hide"
+          }
+        ]
+      },
+      "label": "Hide In Mobile",
+      "default_value": "block"
+    }
+  ],
+  "description": "Full width strip-banner usually used for New Welcome Program on the PSLP",
+  "options": {
+    "html": "<div id=\"optimizely-extension-{{ extension.$instance }}\" class=\"{{ extension.hideInMobile }}\">\n  <article style=\"background-color: {{ extension.backgroundColor }};\">\n    <a href=\"{{ extension.link }}\">\n      <div class=\"py-10 sm:py-20 px-24 sm:px-60 md:px-40 mx-auto flex flex-row {{ extension.horizontalAlignment }}\" style=\"max-width: 1170px;\">\n        {{{ extension.description }}}\n      </div>\n    </a>\n  </article>\n</div>\n",
+    "css": "",
+    "apply_js": "/*\n * Modes supported: \"before\", \"after\", \"replace\"\n * - before/after: just inject and track the inserted node\n * - replace: save original node details so reset can fully restore\n */\n(function () {\n  var utils = window.optimizely && window.optimizely.get('utils');\n  if (!utils) return;\n\n  var sel  = (extension.targetSelector || 'body').trim() || 'body';\n  var mode = (extension.insertMode || extension.insertPosition || 'before').toLowerCase();\n  if (['before','after','replace'].indexOf(mode) === -1) mode = 'before';\n\n  // Per-instance store\n  window.__ovw = window.__ovw || {};\n  var key = String(extension.$instance);\n\n  utils.waitForElement(sel).then(function (target) {\n    if (!target) return;\n\n    var id = 'optimizely-extension-' + extension.$instance;\n\n    // Remove any previously injected instance\n    var existing = document.getElementById(id);\n    if (existing && existing.parentNode) existing.parentNode.removeChild(existing);\n\n    // Prepare store\n    var store = window.__ovw[key] = window.__ovw[key] || {};\n\n    try {\n      if (mode === 'before') {\n        target.insertAdjacentHTML('beforebegin', extension.$html);\n      } else if (mode === 'after') {\n        target.insertAdjacentHTML('afterend', extension.$html);\n      } else {\n        // REPLACE: save original so we can restore on reset\n        store.parent = target.parentNode || null;\n        store.nextSibling = target.nextSibling || null;\n        store.originalHTML = target.outerHTML;\n\n        // Insert our banner right before target, then remove target\n        target.insertAdjacentHTML('beforebegin', extension.$html);\n        if (target.parentNode) target.parentNode.removeChild(target);\n      }\n\n      // Record the inserted node for easy removal on reset\n      store.inserted = document.getElementById(id) || null;\n\n    } catch (e) {\n      // Last-resort fallback to body\n      (document.body || document.documentElement).insertAdjacentHTML('beforeend', extension.$html);\n      window.__ovw[key].inserted = document.getElementById(id) || null;\n    }\n  });\n})();\n",
+    "undo_js": "/*\n * Reset behavior:\n * - Always remove the injected node if present.\n * - If we previously REPLACED, restore the original node from saved HTML.\n */\n(function () {\n  var key = String(extension.$instance);\n  var store = window.__ovw && window.__ovw[key];\n  if (!store) return;\n\n  // 1) Remove injected content\n  if (store.inserted && store.inserted.parentNode) {\n    store.inserted.parentNode.removeChild(store.inserted);\n  }\n\n  // 2) If we replaced something, restore it\n  if (store.parent && store.originalHTML) {\n    var t = document.createElement('template');\n    t.innerHTML = store.originalHTML.trim();\n    var originalNode = t.content.firstElementChild;\n    if (originalNode) {\n      if (store.nextSibling && store.nextSibling.parentNode === store.parent) {\n        store.parent.insertBefore(originalNode, store.nextSibling);\n      } else {\n        store.parent.appendChild(originalNode);\n      }\n    }\n  }\n\n  // 3) Cleanup\n  delete window.__ovw[key];\n})();\n"
+  }
+}
